@@ -7,7 +7,7 @@ services:
     ports:
       - "5432"
   opennms_build:
-    image: indigo/docker-compile-opennms
+    image: opennms/build-env
     env_file:
       - .opennms.env
       - .postgres.env

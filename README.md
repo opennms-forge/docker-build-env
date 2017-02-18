@@ -7,60 +7,36 @@ The source code is checked out on the local machine and the container is used to
 
 ## Requirements
 
-* Docker installed
+* Docker 1.8+ installed
+* Docker Compose 1.8+ installed
 * Git to checkout the source code locally
 
 ## Usage
 
-The container runs by default the `mvn -h` command.
-As `ENTRYPOINT` the binary `mvn` is set and as `CMD` the `-h` is used as default and can be overwritten.
-Additionally the environment has set the _Maven_ options to
+Checkout out the environment and the source code:
+```
+git clone https://github.com/opennms-forge/docker-build-env.git
+cd docker-build-env
+git clone https://github.com/OpenNMS/opennms.git
+```
 
-NOTE: By default OpenNMS build profiles are set to `-DskipTests=false` and `-DskipITs=true`.
-      If you want to have a different behavior set the `-DskipTests` and `-DskipITs` accordingly.
+Compile and assemble OpenNMS from source
+```
+docker-compose up -d
+```
 
-Inside the container the following directories are used:
+Run OpenNMS
+```
+docker-compose -f opennms.yml up -d
+```
 
-* `/opt/opennms/src`: Working directory which contains the OpenNMS source code
-* `/root/.m2`: Maven repository with downloaded dependencies
+For the reason you can run multiple instances of OpenNMS and PostgreSQL on the same machine the ports are assigned dynamically.
+Please check with `docker ps` which ports are assigned for Postgres database and the OpenNMS WebUI.
+By default OpenNMS is started with Debug port enabled using the `-t` option in the `opennms.yml` file.
 
-Create a workspace with the source code:
+## Using external maven proxy like JFrog
 
-    mkdir workspace
-    cd workspace
-    git clone https://github.com/opennms/opennms
-
-Get the docker compile environment:
-
-    docker pull indigo/docker-compile-opennms
-
-If you just run the container without arguments it will just execute `mvn -h`.
-The binary `mvn` can't be overriden and is used as `ENTRYPOINT` of the container.
-Any other argument will override `-h` and is then executed.
-
-Run the compiler and make sure the compiled artefacts get persisted locally:
-
-    docker run -v ~/workspace/opennms:/opt/src/opennms indigo/docker-compile-opennms -Dbuild.profile=default -Dmaven.metadata.legacy=true -Djava.awt.headless=true -DfailIfNoTests=false install
-
-In case you want to reuse a local Maven repository, just mount the directory in the container.
-Add a second `-v` command to the `docker run` command.
-
-Mount local Maven repository with docker run command:
-
-    -v ~/.m2:/root/.m2
-
-## Maven default settings
-
-The docker environment is set to a good default which allows you to compile OpenNMS.
-
-Default Maven options to compile OpenNMS from:
-
-    MAVEN_OPTS="-XX:MaxHeapSize=2G \
-                -XX:ReservedCodeCacheSize=512m \
-                -XX:+TieredCompilation \
-                -XX:TieredStopAtLevel=1 \
-                -XX:-UseGCOverheadLimit \
-                -XX:+UseParallelGC \
-                -XX:+UseParallelOldGC`
-
-It is possible to override the default settings by overriding the `MAVEN_OPTS` by using the `-e, --env=[]` argument of the `docker run` command.
+Mount a `settings.xml` into the container in the `docker-compose.xml`
+```
+- ./assets/settings.xml:/root/.m2/settings.xml
+```

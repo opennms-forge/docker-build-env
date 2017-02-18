@@ -15,7 +15,7 @@ services:
       - database
     volumes:
       - ./opennms/target/opennms:/opt/opennms
-    command: [ "/opennms.sh", "-s" ]
+    command: [ "/opennms.sh", "-t" ]
     ports:
       - "8980"
       - "18980"

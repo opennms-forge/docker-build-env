@@ -25,6 +25,7 @@ usage() {
   echo "-h: Show this help."
   echo "-i: Initialize Java environment, database and pristine OpenNMS configuration files, do not start OpenNMS."
   echo "-s: Initialize environment like -i and start OpenNMS in foreground."
+  echo "-t: Initialize environment like -i and start OpenNMS in foreground and open the debug connection port."
   echo ""
 }
 
@@ -80,6 +81,13 @@ start() {
   exec ./opennms -f start
 }
 
+start_debug() {
+  cd ${OPENNMS_HOME}/bin
+  sleep ${START_DELAY}
+  exec ./opennms -f -t start
+}
+
+
 # Evaluate arguments for build script.
 if [[ "${#}" == 0 ]]; then
   usage
@@ -108,6 +116,13 @@ while getopts fhis flag; do
       initdb
       initData
       start
+      exit
+      ;;
+    t)
+      initConfig
+      initdb
+      initData
+      start_debug
       exit
       ;;
     *)

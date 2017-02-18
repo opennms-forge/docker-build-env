@@ -19,5 +19,5 @@ mvn -Dbuild.profile=dir -Droot.dir=${OPENNMS_SRC} -Dopennms.home=${OPENNMS_HOME}
 cd ${OPENNMS_SRC}/opennms-full-assembly
 mvn -Dbuild.profile=fulldir -Droot.dir=${OPENNMS_SRC} -Dopennms.home=${OPENNMS_HOME} -DskipTests -Dmaven.metadata.legacy=true -Djava.awt.headless=true install
 
-cd ${OPENNMS_SRC}
+cd ${OPENNMS_SRC}/target
 ln -s opennms-**/ opennms

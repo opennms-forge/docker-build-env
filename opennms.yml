@@ -1,0 +1,27 @@
+version: '2'
+services:
+  database:
+    image: postgres:9.6.1
+    env_file:
+      - .postgres.env
+    ports:
+      - "5432"
+  opennms_build:
+    image: indigo/docker-compile-opennms
+    env_file:
+      - .opennms.env
+      - .postgres.env
+    depends_on:
+      - database
+    volumes:
+      - ./opennms/target/opennms:/opt/opennms
+    command: [ "/opennms.sh", "-s" ]
+    ports:
+      - "8980"
+      - "18980"
+      - "1099"
+      - "8101"
+      - "8001"
+      - "61616"
+      - "5817"
+      - "162/udp"

@@ -1,0 +1,7 @@
+version: '2'
+services:
+  opennms_build:
+    image: indigo/docker-compile-opennms
+    volumes:
+      - ./opennms:/usr/src/opennms
+    command: [ "/fullbuild.sh" ]

@@ -3,7 +3,7 @@
     <mirrors>
         <mirror>
             <id>maven-proxy</id>
-            <url>http://192.168.1.178:8081/artifactory/remote-repos/</url>
+            <url>http://jfrog:8081/artifactory/remote-repos/</url>
             <mirrorOf>*</mirrorOf>
         </mirror>
     </mirrors>

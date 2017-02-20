@@ -15,6 +15,8 @@ RUN yum -y --setopt=tsflags=nodocs update && \
     rpm -Uvh http://yum.opennms.org/repofiles/opennms-repo-${OPENNMS_VERSION}-rhel7.noarch.rpm && \
     rpm --import http://yum.opennms.org/OPENNMS-GPG-KEY && \
     yum -y install git \
+                   which \
+                   expect \
                    iplike \
                    rrdtool \
                    jrrd2 \

@@ -4,4 +4,4 @@ services:
     image: opennms/build-env
     volumes:
       - ./opennms:/usr/src/opennms
-    command: [ "/fullbuild.sh" ]
+    command: [ "/fullbuild.sh", "-DskipTests=true" ]

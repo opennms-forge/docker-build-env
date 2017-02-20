@@ -8,16 +8,16 @@
 # =====================================================================
 
 cd ${OPENNMS_SRC}
-mvn -Dbuild.profile=default -Droot.dir=${OPENNMS_SRC} -Dopennms.home=${OPENNMS_HOME} -DskipTests -Dmaven.metadata.legacy=true -Djava.awt.headless=true install
+mvn -Dbuild.profile=default -Droot.dir=${OPENNMS_SRC} -Dopennms.home=${OPENNMS_HOME} -Dmaven.metadata.legacy=true -Djava.awt.headless=true ${@} install
 
 cd ${OPENNMS_SRC}/core/build
-mvn -Dbuild.profile=dir -Droot.dir=${OPENNMS_SRC} -Dopennms.home=${OPENNMS_HOME} -DskipTests -Dmaven.metadata.legacy=true -Djava.awt.headless=true install
+mvn -Dbuild.profile=dir -Droot.dir=${OPENNMS_SRC} -Dopennms.home=${OPENNMS_HOME} -Dmaven.metadata.legacy=true -Djava.awt.headless=true ${@} install
 
 cd ${OPENNMS_SRC}/container/features
-mvn -Dbuild.profile=dir -Droot.dir=${OPENNMS_SRC} -Dopennms.home=${OPENNMS_HOME} -DskipTests -Dmaven.metadata.legacy=true -Djava.awt.headless=true install
+mvn -Dbuild.profile=dir -Droot.dir=${OPENNMS_SRC} -Dopennms.home=${OPENNMS_HOME} -Dmaven.metadata.legacy=true -Djava.awt.headless=true ${@} install
 
 cd ${OPENNMS_SRC}/opennms-full-assembly
-mvn -Dbuild.profile=fulldir -Droot.dir=${OPENNMS_SRC} -Dopennms.home=${OPENNMS_HOME} -DskipTests -Dmaven.metadata.legacy=true -Djava.awt.headless=true install
+mvn -Dbuild.profile=fulldir -Droot.dir=${OPENNMS_SRC} -Dopennms.home=${OPENNMS_HOME} -Dmaven.metadata.legacy=true -Djava.awt.headless=true ${@} install
 
 cd ${OPENNMS_SRC}/target
 ln -s opennms-**/ opennms

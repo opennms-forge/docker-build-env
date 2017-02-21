@@ -1,4 +1,4 @@
-FROM indigo/centos-maven:openjdk-8u121-jdk_3.3.9
+FROM opennms/maven:3.3.9_8u121-jdk
 
 MAINTAINER Ronny Trommer <ronny@opennms.org>
 

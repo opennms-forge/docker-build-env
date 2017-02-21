@@ -7,14 +7,13 @@ ARG OPENNMS_VERSION=develop
 ENV OPENNMS_SRC /usr/src/opennms
 ENV OPENNMS_HOME /opt/opennms
 
-ENV NSIS_RPM_URL http://www6.atomicorp.com/channels/atomic/centos/7/x86_64/RPMS/mingw32-nsis-2.46-12.el7.art.x86_64.rpm
-
 ENV MAVEN_OPTS "-XX:MaxHeapSize=2G -XX:ReservedCodeCacheSize=512m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -XX:-UseGCOverheadLimit -XX:+UseParallelGC -XX:+UseParallelOldGC"
 
 RUN yum -y --setopt=tsflags=nodocs update && \
     rpm -Uvh http://yum.opennms.org/repofiles/opennms-repo-${OPENNMS_VERSION}-rhel7.noarch.rpm && \
     rpm --import http://yum.opennms.org/OPENNMS-GPG-KEY && \
     yum -y install git \
+                   mingw32-nsis \
                    which \
                    expect \
                    iplike \
@@ -22,7 +21,6 @@ RUN yum -y --setopt=tsflags=nodocs update && \
                    jrrd2 \
                    jicmp \
                    jicmp6 && \
-    rpm -i ${NSIS_RPM_URL} && \
     yum install -y rpm-build \
                    redhat-rpm-config && \
     yum clean all

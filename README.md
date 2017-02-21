@@ -64,13 +64,25 @@ You can run now `bonms /path/to/source/from/git/clone` it will create compiled a
 The assembled OpenNMS can be executed in background (-d) with `docker-compose -f opennms.yml up -d`.
 Make sure the mount point in the `opennms.yml` references your opennms/target directory.
 
-## Using external maven proxy like JFrog
+## Using local Maven Proxy JFrog
 
 In case you want to use a Maven proxy, you can use something like [JFrog](https://www.jfrog.com).
-There is an opennms-jfrog.yml file which provides it as a service as well.
-The default repositories can be found in the assets directory.
+There is an `jfrog.yml` file which provides it as a service as well.
+The default repositories required to use it as Maven proxy for OpenNMS can be found in the assets directory.
 
-Mount a `settings.xml` into the container in the `docker-compose.xml`
+A local Maven Proxy can be started by running:
+
+```
+docker-compose -f jfrog.yml up -d
+```
+
+The data and configuration directory is by default mounted to a local directory and can be changed in the `volume` section in the `jfrog.yml` file.
+
+To use the Maven Proxy you can use the `assets/settings.xml` and change the hostname and port to your environment.
+You can mount a `settings.xml` into the build environment container in the `docker-compose.xml` with:
+
 ```
 - ./assets/settings.xml:/root/.m2/settings.xml
 ```
+
+The next build will run against your local proxy and all artefacts will be cached locally.

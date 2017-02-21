@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <config xmlns="http://artifactory.jfrog.org/xsd/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.jfrog.org/xsd/artifactory-v2_0_0.xsd">
     <offlineMode>false</offlineMode>
     <helpLinksEnabled>true</helpLinksEnabled>
@@ -6,7 +6,7 @@
     <dateFormat>dd-MM-yy HH:mm:ss z</dateFormat>
     <addons>
         <showAddonsInfo>true</showAddonsInfo>
-        <showAddonsInfoCookie>1486974745987</showAddonsInfoCookie>
+        <showAddonsInfoCookie>1487581228112</showAddonsInfoCookie>
     </addons>
     <security>
         <anonAccessEnabled>true</anonAccessEnabled>
@@ -127,7 +127,7 @@
                     <enabled>false</enabled>
                 </properties>
                 <source>
-                <originAbsenceDetection>false</originAbsenceDetection>
+                    <originAbsenceDetection>false</originAbsenceDetection>
                 </source>
             </contentSynchronisation>
             <blockMismatchingMimeTypes>true</blockMismatchingMimeTypes>
@@ -178,7 +178,7 @@
                     <enabled>false</enabled>
                 </properties>
                 <source>
-                <originAbsenceDetection>false</originAbsenceDetection>
+                    <originAbsenceDetection>false</originAbsenceDetection>
                 </source>
             </contentSynchronisation>
             <blockMismatchingMimeTypes>true</blockMismatchingMimeTypes>
@@ -229,7 +229,7 @@
                     <enabled>false</enabled>
                 </properties>
                 <source>
-                <originAbsenceDetection>false</originAbsenceDetection>
+                    <originAbsenceDetection>false</originAbsenceDetection>
                 </source>
             </contentSynchronisation>
             <blockMismatchingMimeTypes>true</blockMismatchingMimeTypes>
@@ -280,7 +280,7 @@
                     <enabled>false</enabled>
                 </properties>
                 <source>
-                <originAbsenceDetection>false</originAbsenceDetection>
+                    <originAbsenceDetection>false</originAbsenceDetection>
                 </source>
             </contentSynchronisation>
             <blockMismatchingMimeTypes>true</blockMismatchingMimeTypes>
@@ -331,7 +331,7 @@
                     <enabled>false</enabled>
                 </properties>
                 <source>
-                <originAbsenceDetection>false</originAbsenceDetection>
+                    <originAbsenceDetection>false</originAbsenceDetection>
                 </source>
             </contentSynchronisation>
             <blockMismatchingMimeTypes>true</blockMismatchingMimeTypes>
@@ -382,7 +382,7 @@
                     <enabled>false</enabled>
                 </properties>
                 <source>
-                <originAbsenceDetection>false</originAbsenceDetection>
+                    <originAbsenceDetection>false</originAbsenceDetection>
                 </source>
             </contentSynchronisation>
             <blockMismatchingMimeTypes>true</blockMismatchingMimeTypes>
@@ -433,7 +433,7 @@
                     <enabled>false</enabled>
                 </properties>
                 <source>
-                <originAbsenceDetection>false</originAbsenceDetection>
+                    <originAbsenceDetection>false</originAbsenceDetection>
                 </source>
             </contentSynchronisation>
             <blockMismatchingMimeTypes>true</blockMismatchingMimeTypes>
@@ -484,7 +484,7 @@
                     <enabled>false</enabled>
                 </properties>
                 <source>
-                <originAbsenceDetection>false</originAbsenceDetection>
+                    <originAbsenceDetection>false</originAbsenceDetection>
                 </source>
             </contentSynchronisation>
             <blockMismatchingMimeTypes>true</blockMismatchingMimeTypes>
@@ -535,7 +535,7 @@
                     <enabled>false</enabled>
                 </properties>
                 <source>
-                <originAbsenceDetection>false</originAbsenceDetection>
+                    <originAbsenceDetection>false</originAbsenceDetection>
                 </source>
             </contentSynchronisation>
             <blockMismatchingMimeTypes>true</blockMismatchingMimeTypes>
@@ -557,15 +557,15 @@
             <forceNugetAuthentication>false</forceNugetAuthentication>
             <artifactoryRequestsCanRetrieveRemoteArtifacts>false</artifactoryRequestsCanRetrieveRemoteArtifacts>
             <repositories>
-                <repositoryRef>jcenter</repositoryRef>
-                <repositoryRef>opennms-everything</repositoryRef>
-                <repositoryRef>maven-central</repositoryRef>
-                <repositoryRef>public-jboss</repositoryRef>
-                <repositoryRef>vaadin-snapshots</repositoryRef>
                 <repositoryRef>jasperreports</repositoryRef>
                 <repositoryRef>jasperreports-3rdparty</repositoryRef>
-                <repositoryRef>opennms-3rd-party</repositoryRef>
+                <repositoryRef>jcenter</repositoryRef>
+                <repositoryRef>maven-central</repositoryRef>
                 <repositoryRef>oosnmp</repositoryRef>
+                <repositoryRef>opennms-3rd-party</repositoryRef>
+                <repositoryRef>opennms-everything</repositoryRef>
+                <repositoryRef>public-jboss</repositoryRef>
+                <repositoryRef>vaadin-snapshots</repositoryRef>
             </repositories>
             <pomRepositoryReferencesCleanupPolicy>discard_active_reference</pomRepositoryReferencesCleanupPolicy>
         </virtualRepository>
@@ -696,3 +696,4 @@
         <enabled>false</enabled>
     </sumoLogicConfig>
 </config>
+

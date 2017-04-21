@@ -1,4 +1,4 @@
-FROM opennms/maven:3.3.9_8u121-jdk
+FROM opennms/maven:3.5.0_8u131-jdk
 
 MAINTAINER Ronny Trommer <ronny@opennms.org>
 

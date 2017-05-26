@@ -106,7 +106,7 @@ RUN git clone ${JICMP6_GIT_REPO_URL} ${JICMP6_SRC} && \
     git submodule update --init --recursive && \
     autoreconf -fvi && \
     ./configure && \
-    make
+    make -j$(nproc)
 
 #
 # Stage 6: Compile JRRD2
@@ -133,7 +133,7 @@ RUN git clone ${JRRD2_GIT_REPO_URL} ${JRRD2_SRC} && \
     mvn clean compile && \
     cd ../build && \
     cmake ../jni/ && \
-    make && \
+    make -j$(nproc) && \
     cd ../java && \
     mvn package
 

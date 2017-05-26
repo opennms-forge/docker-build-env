@@ -8,7 +8,6 @@
 # =====================================================================
 
 START_DELAY=5
-OPENNMS_DATA_DIR=/opennms-data
 OPENNMS_HOME=/opt/opennms
 OPENNMS_DATASOURCES_TPL=/tmp/opennms-datasources.xml.tpl
 OPENNMS_DATASOURCES_CFG=${OPENNMS_HOME}/etc/opennms-datasources.xml
@@ -25,7 +24,6 @@ usage() {
   echo "-h: Show this help."
   echo "-i: Initialize Java environment, database and pristine OpenNMS configuration files, do not start OpenNMS."
   echo "-s: Initialize environment like -i and start OpenNMS in foreground."
-  echo "-t: Initialize environment like -i and start OpenNMS in foreground and open the debug connection port."
   echo ""
 }
 
@@ -57,36 +55,11 @@ initConfig() {
   fi
 }
 
-initData() {
-  # Create OpenNMS data directories
-  mkdir -p ${OPENNMS_DATA_DIR}/logs \
-           ${OPENNMS_DATA_DIR}/rrd/response \
-           ${OPENNMS_DATA_DIR}/rrd/snmp \
-           ${OPENNMS_DATA_DIR}/reports
-
-  # Remove symlinks and pristine empty data directories
-  rm -rf $OPENNMS_HOME/logs
-  rm -rf ${OPENNMS_HOME}/share/rrd
-  rm -rf ${OPENNMS_HOME}/share/reports
-
-  # Create links to directories which can be mounted into a data container
-  ln -s ${OPENNMS_DATA_DIR}/logs ${OPENNMS_HOME}/logs
-  ln -s ${OPENNMS_DATA_DIR}/rrd ${OPENNMS_HOME}/share/rrd
-  ln -s ${OPENNMS_DATA_DIR}/reports ${OPENNMS_HOME}/share/reports
-}
-
 start() {
   cd ${OPENNMS_HOME}/bin
   sleep ${START_DELAY}
   exec ./opennms -f start
 }
-
-start_debug() {
-  cd ${OPENNMS_HOME}/bin
-  sleep ${START_DELAY}
-  exec ./opennms -f -t start
-}
-
 
 # Evaluate arguments for build script.
 if [[ "${#}" == 0 ]]; then
@@ -95,7 +68,7 @@ if [[ "${#}" == 0 ]]; then
 fi
 
 # Evaluate arguments for build script.
-while getopts fhist flag; do
+while getopts fhis flag; do
   case ${flag} in
     f)
       start
@@ -108,21 +81,12 @@ while getopts fhist flag; do
     i)
       initConfig
       initdb
-      initData
       exit
       ;;
     s)
       initConfig
       initdb
-      initData
       start
-      exit
-      ;;
-    t)
-      initConfig
-      initdb
-      initData
-      start_debug
       exit
       ;;
     *)

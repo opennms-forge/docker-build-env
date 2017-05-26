@@ -1,7 +1,50 @@
 version: '2'
+volumes:
+  data-postgres:
+    driver: "local"
+  data-opennms:
+    driver: "local"
+networks:
+  onms-net:
+    driver: bridge
 services:
-  opennms_build:
-    image: opennms/build-env
+  database:
+    image: postgres:9.6
+    environment:
+      - TZ=Europe/Berlin
+      - POSTGRES_HOST=database
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432"
     volumes:
-      - ./opennms:/usr/src/opennms
-    command: [ "/fullbuild.sh", "-DskipTests=true" ]
+      - data-postgres:/var/lib/postgresql/data
+    networks:
+      - onms-net
+  opennms:
+    image: opennms
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - TZ=Europe/Berlin
+      - OPENNMS_DBNAME=opennms
+      - OPENNMS_DBUSER=opennms
+      - OPENNMS_DBPASS=opennms
+      - OPENNMS_HOME=/opt/opennms
+      - OPENNMS_DB_CONFIG=/opt/opennms/etc/opennms-datasources.xml
+      - POSTGRES_HOST=database
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - database
+    networks:
+      - onms-net
+    command: ["-s"]
+    ports:
+      - "8980"
+    volumes:
+      - data-opennms:/opt/opennms/etc
+      - data-opennms:/opt/opennms/share/rrd
+      - data-opennms:/opt/opennms/share/reports

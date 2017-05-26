@@ -2,7 +2,7 @@
 
 This container can be used to compile and assemble OpenNMS from source code.
 Primary distribution for OpenNMS RHEL or CentOS.
-The environment is built on official vanilla CentOS 7 and uses Docker multi-stage build which requires a current stable release of Docker.
+The environment is built on official vanilla CentOS 7 and uses Docker multi-stage build which requires an edge release of Docker.
 
 The versions in Ubuntu or CentOS are too old so please use the [Docker install instructions](https://docs.docker.com/engine/installation).
 As a result it will give you a container image which is ready to run.

@@ -243,8 +243,6 @@ RUN cd ${OPENNMS_HOME} && \
     rm -f *-source.tar.gz && \
     tar xzf opennms-*.tar.gz && \
     rm -rf *.tar.gz
-RUN rm -rf /root/.m2 && \
-    rm -rf /usr/src/opennms/
 
 ## Volumes for storing data outside of the container
 VOLUME ["/opt/opennms/etc", "/opt/opennms/share/rrd", "/opt/opennms/share/reports"]

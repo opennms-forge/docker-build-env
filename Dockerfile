@@ -43,6 +43,8 @@ FROM maven as build-env
 MAINTAINER Ronny Trommer <ronny@opennms.org>
 
 ARG NSIS_RPM_URL="http://yum.opennms.org/branches/develop/rhel7/nsis/mingw32-nsis-2.50-1.el7.centos.x86_64.rpm"
+ARG MAVEN_PROXY_URL
+
 RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y install git \
                    which \
@@ -57,6 +59,14 @@ RUN yum -y --setopt=tsflags=nodocs update && \
     yum install -y rpm-build \
                    redhat-rpm-config && \
     yum clean all
+
+# In case there is a MAVEN_PROXY_URL set, the settings.xml will be generated otherwise an empty settings.xml is created.
+RUN mkdir -p ${HOME}/.m2 && \
+    if [ -z ${MAVEN_PROXY_URL} ]; then \
+      echo '<settings />' > ${HOME}/.m2/settings.xml; \
+    else \
+      echo "<settings><mirrors><mirror><id>maven-proxy</id><url>${MAVEN_PROXY_URL}</url><mirrorOf>*</mirrorOf></mirror></mirrors></settings>" > ${HOME}/.m2/settings.xml; \
+    fi
 
 #
 # Stage 4: Compile JICMP
@@ -165,7 +175,7 @@ RUN git clone ${OPENNMS_GIT_REPO_URL} ${OPENNMS_SRC} && \
     git describe --all > git.describe
 
 WORKDIR ${OPENNMS_SRC}
-
+      
 RUN mvn -Dbuild.profile=default \
         -Droot.dir=${OPENNMS_SRC} \
         -Dopennms.home=${OPENNMS_HOME} \

@@ -175,7 +175,7 @@ RUN git clone ${OPENNMS_GIT_REPO_URL} ${OPENNMS_SRC} && \
     git describe --all > git.describe
 
 WORKDIR ${OPENNMS_SRC}
-      
+
 RUN mvn -Dbuild.profile=default \
         -Droot.dir=${OPENNMS_SRC} \
         -Dopennms.home=${OPENNMS_HOME} \

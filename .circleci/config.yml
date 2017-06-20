@@ -3,8 +3,6 @@
    build:
      working_directory: ~/docker-build-dev
      machine: true
-     docker:
-       - image: docker:17.06.0-ce-rc4-git
      steps:
        - checkout
        - run: docker version

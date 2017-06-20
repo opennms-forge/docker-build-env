@@ -1,7 +1,9 @@
 version: 2
  jobs:
    build:
-     working_directory: ~/<project root directory>
+     working_directory: ~/docker-build-env
+     docker:
+       - image: ubuntu:14.04
      steps:
        - checkout
        - setup_remote_docker

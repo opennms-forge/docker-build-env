@@ -217,6 +217,8 @@ MAINTAINER Ronny Trommer <ronny@opennms.org>
 
 ARG OPENNMS_HOME=/opt/opennms/
 
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
+
 RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y install rrdtool \
            gettext && \

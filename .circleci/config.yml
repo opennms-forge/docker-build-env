@@ -1,0 +1,8 @@
+version: 2
+ jobs:
+   build:
+     working_directory: ~/<project root directory>
+     steps:
+       - checkout
+       - setup_remote_docker
+       - run: echo "hello world"

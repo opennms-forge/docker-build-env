@@ -18,4 +18,4 @@
           name: Build OpenNMS Horizon Docker image
           command: |
             env
-            docker build -t horizon-core-web-{{ .Branch }}-{{ .Revision }}-{{ .BuildNum }} .
+            docker build -t horizon-core-web .

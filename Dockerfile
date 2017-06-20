@@ -253,6 +253,7 @@ RUN cd ${OPENNMS_HOME} && \
     rm -f *-source.tar.gz && \
     tar xzf opennms-*.tar.gz && \
     cp -r ${OPENNMS_HOME}/etc ${OPENNMS_HOME}/share/etc-pristine && \
+    echo "version.display=$(cat ${OPENNMS_HOME}/opennms.git.describe)" > ${OPENNMS_HOME}/etc/opennms.properties.d/version.properties && \ 
     rm -rf *.tar.gz
 RUN rm -rf /root/.m2 && \
     rm -rf /usr/src/opennms/

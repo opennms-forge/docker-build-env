@@ -159,7 +159,7 @@ ARG OPENNMS_HOME=/opt/opennms
 ARG MAVEN_OPTS="-XX:MaxHeapSize=2G -XX:ReservedCodeCacheSize=512m -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -XX:-UseGCOverheadLimit -XX:+UseParallelGC -XX:+UseParallelOldGC"
 ARG OPENNMS_GIT_REPO_URL="https://github.com/opennms/opennms"
 ARG OPENNMS_GIT_BRANCH_REF="develop"
-ARG BUILD_OPTIONS="-q -DskipTests"
+ARG BUILD_OPTIONS="-DskipTests"
 
 LABEL org.opennms.git.repo.url="${OPENNMS_GIT_REPO_URL}" \
       org.opennms.git.repo.branch.ref="${OPENNMS_GIT_BRANCH_REF}" \

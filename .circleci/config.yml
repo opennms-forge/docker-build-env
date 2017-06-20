@@ -1,10 +1,9 @@
-version: 2
+ version: 2
  jobs:
    build:
-     working_directory: ~/docker-build-env
+     working_directory: ~/<project root directory>
      docker:
-       - image: ubuntu:14.04
+       - image: circleci/<language>:<version TAG>
      steps:
        - checkout
-       - setup_remote_docker
        - run: echo "hello world"

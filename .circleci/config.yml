@@ -9,7 +9,6 @@
        - run: sudo service docker stop
        - run: curl -fsSL https://get.docker.com/ | sudo sh
        - run: docker version
-       - setup_remote_docker
        - run:
           name: Install dependencies
           command: |

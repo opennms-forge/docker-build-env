@@ -3,7 +3,7 @@
    build:
      working_directory: ~/<project root directory>
      docker:
-       - image: circleci/<language>:<version TAG>
+       - image: circleci/golang:latest
      steps:
        - checkout
        - run: echo "hello world"

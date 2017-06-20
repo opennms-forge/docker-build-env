@@ -3,7 +3,7 @@
    build:
      working_directory: ~/docker-build-dev
      docker:
-       - image: docker:17.05.0-ce-git
+       - image: docker:17.06.0-ce-rc4-git
      steps:
        - checkout
        - setup_remote_docker

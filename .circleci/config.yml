@@ -2,10 +2,15 @@
  jobs:
    build:
      working_directory: ~/docker-build-dev
+     machine: true
      docker:
        - image: docker:17.06.0-ce-rc4-git
      steps:
        - checkout
+       - run: docker version
+       - run: sudo service docker stop
+       - run: curl -fsSL https://get.docker.com/ | sudo sh
+       - run: docker version
        - setup_remote_docker
        - run:
           name: Install dependencies

@@ -1,7 +1,7 @@
  version: 2
  jobs:
    build:
-     working_directory: ~/<project root directory>
+     working_directory: ~/docker-build-dev
      docker:
        - image: circleci/golang:latest
      steps:

@@ -72,7 +72,7 @@ docker build \
 | _MAVEN_VERSION_          | `3.5.0`                              | Version number for Apache Maven                                 |
 | _MAVEN_URL_              | `http://ftp.halifax.rwth-aachen.de`  | Server URL for Apache Maven package                             |
 | _MAVEN_PKG_              | `${MAVEN_URL}/apache/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz` | Maven binary package URL |
-| _MAVEN_PROXY_URL_        | `http://192.168.1.152:8081`          | Alternative Maven proxy server for artefacts                    |
+| _MAVEN_PROXY_URL_        | _not set_ uses the OpenNMS provided Maven repo                                                         | Alternative Maven proxy server, e.g. with JFrog `http://<jfrog-ip>:8081/artifactory/remote-repos/` |
 | _NSIS_RPM_URL_           | `http://yum.opennms.org/branches/develop/rhel7/nsis/mingw32-nsis-2.50-1.el7.centos.x86_64.rpm`         | Make NSIS Package URL    |
 | _JICMP_GIT_REPO_URL_     | `https://github.com/opennms/jicmp`   | Git repository URL for JICMP                                    |
 | _JICMP_GIT_BRANCH_REF_   | `jicmp-2.0.4-1`                      | Tag or branch for JICMP                                         |

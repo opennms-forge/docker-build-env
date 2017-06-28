@@ -87,7 +87,11 @@ LABEL org.opennms.jicmp.git.repo.url="${JICMP_GIT_REPO_URL}" \
 RUN git clone ${JICMP_GIT_REPO_URL} ${JICMP_SRC} && \
     cd ${JICMP_SRC} && \
     git checkout ${JICMP_GIT_BRANCH_REF} && \
-    git describe --all > git.describe && \
+    
+    
+    
+    
+    > git.describe && \
     git submodule update --init --recursive && \
     autoreconf -fvi && \
     ./configure && \
@@ -112,7 +116,7 @@ LABEL org.opennms.jicmp6.git.repo.url="${JICMP6_GIT_REPO_URL}" \
 RUN git clone ${JICMP6_GIT_REPO_URL} ${JICMP6_SRC} && \
     cd ${JICMP6_SRC} && \
     git checkout ${JICMP6_GIT_BRANCH_REF} && \
-    git describe --all > git.describe && \
+    git describe > git.describe && \
     git submodule update --init --recursive && \
     autoreconf -fvi && \
     ./configure && \
@@ -137,7 +141,7 @@ LABEL org.opennms.jrrd2.git.repo.url="${JRRD2_GIT_REPO_URL}" \
 RUN git clone ${JRRD2_GIT_REPO_URL} ${JRRD2_SRC} && \
     cd ${JRRD2_SRC} && \
     git checkout ${JRRD2_GIT_BRANCH_REF} && \
-    git describe --all > git.describe && \
+    git describe > git.describe && \
     mkdir build && \
     cd java && \
     mvn clean compile && \
@@ -172,7 +176,7 @@ RUN git clone ${OPENNMS_GIT_REPO_URL} ${OPENNMS_SRC} && \
     cd ${OPENNMS_SRC} && \
     git fetch --all && \
     git checkout ${OPENNMS_GIT_BRANCH_REF} && \
-    git describe --all > git.describe
+    git describe > git.describe
 
 WORKDIR ${OPENNMS_SRC}
 

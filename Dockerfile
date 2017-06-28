@@ -10,7 +10,7 @@ ARG JAVA_VERSION_DETAIL=1.8.0.131
 ENV JAVA_HOME /usr/lib/jvm/java
 
 LABEL vendor="OpenJDK" \
-      org.opennms.java.version="openjdk-${JAVA_VERSION}-{JAVA_VERSION_DETAIL}"
+      org.opennms.java.version="openjdk-${JAVA_VERSION}-${JAVA_VERSION_DETAIL}"
 
 RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y install java-${JAVA_VERSION}-openjdk-devel-${JAVA_VERSION_DETAIL} && \

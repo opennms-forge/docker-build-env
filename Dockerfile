@@ -3,7 +3,7 @@
 #
 FROM centos:7 as java-dev
 
-MAINTAINER Ronny Trommer <ronny@opennms.org>
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG JAVA_VERSION=1.8.0
 ARG JAVA_VERSION_DETAIL=1.8.0.131
@@ -21,7 +21,7 @@ RUN yum -y --setopt=tsflags=nodocs update && \
 #
 FROM java-dev as maven
 
-MAINTAINER Ronny Trommer <ronny@opennms.org>
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG MAVEN_VERSION="3.5.0"
 ARG MAVEN_URL="http://ftp.halifax.rwth-aachen.de"
@@ -40,7 +40,7 @@ RUN curl ${MAVEN_PKG} | tar xz
 #
 FROM maven as build-env
 
-MAINTAINER Ronny Trommer <ronny@opennms.org>
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG NSIS_RPM_URL="http://yum.opennms.org/branches/develop/rhel7/nsis/mingw32-nsis-2.50-1.el7.centos.x86_64.rpm"
 ARG MAVEN_PROXY_URL
@@ -73,7 +73,7 @@ RUN mkdir -p ${HOME}/.m2 && \
 #
 FROM build-env as jicmp-build
 
-MAINTAINER Ronny Trommer <ronny@opennms.org>
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG JICMP_GIT_REPO_URL="https://github.com/opennms/jicmp"
 ARG JICMP_GIT_BRANCH_REF="jicmp-2.0.4-1"
@@ -87,11 +87,7 @@ LABEL org.opennms.jicmp.git.repo.url="${JICMP_GIT_REPO_URL}" \
 RUN git clone ${JICMP_GIT_REPO_URL} ${JICMP_SRC} && \
     cd ${JICMP_SRC} && \
     git checkout ${JICMP_GIT_BRANCH_REF} && \
-    
-    
-    
-    
-    > git.describe && \
+    git describe > git.describe && \
     git submodule update --init --recursive && \
     autoreconf -fvi && \
     ./configure && \
@@ -102,7 +98,7 @@ RUN git clone ${JICMP_GIT_REPO_URL} ${JICMP_SRC} && \
 #
 FROM build-env as jicmp6-build
 
-MAINTAINER Ronny Trommer <ronny@opennms.org>
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG JICMP6_GIT_REPO_URL="https://github.com/opennms/jicmp6"
 ARG JICMP6_GIT_BRANCH_REF="jicmp6-2.0.3-1"
@@ -156,7 +152,7 @@ RUN git clone ${JRRD2_GIT_REPO_URL} ${JRRD2_SRC} && \
 #
 FROM build-env as opennms-build
 
-MAINTAINER Ronny Trommer <ronny@opennms.org>
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG OPENNMS_SRC=/usr/src/opennms
 ARG OPENNMS_HOME=/opt/opennms
@@ -217,7 +213,7 @@ RUN mvn -Dbuild.profile=default \
 #
 FROM java-dev as opennms
 
-MAINTAINER Ronny Trommer <ronny@opennms.org>
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG OPENNMS_HOME=/opt/opennms/
 

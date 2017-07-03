@@ -123,7 +123,7 @@ RUN git clone ${JICMP6_GIT_REPO_URL} ${JICMP6_SRC} && \
 #
 FROM build-env as jrrd2-build
 
-MAINTAINER Ronny Trommer <ronny@opennms.org>
+LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG JRRD2_GIT_REPO_URL="https://github.com/opennms/jrrd2"
 ARG JRRD2_GIT_BRANCH_REF="2.0.4"

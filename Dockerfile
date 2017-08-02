@@ -6,7 +6,7 @@ FROM centos:7 as java-dev
 LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG JAVA_VERSION=1.8.0
-ARG JAVA_VERSION_DETAIL=1.8.0.131
+ARG JAVA_VERSION_DETAIL=1.8.0.141
 ENV JAVA_HOME /usr/lib/jvm/java
 
 LABEL vendor="OpenJDK" \
@@ -223,22 +223,22 @@ RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y install rrdtool \
            gettext && \
     yum clean all && \
-    mkdir -p ${OPENNMS_HOME} 
+    mkdir -p ${OPENNMS_HOME}
 
 WORKDIR /opt/opennms
 
-# Install JRRD2 artifacts 
+# Install JRRD2 artifacts
 COPY --from=jrrd2-build /usr/src/jrrd2/java/target/jrrd2-api-*.jar /usr/share/java/
 COPY --from=jrrd2-build /usr/src/jrrd2/dist/libjrrd2.so /usr/lib64/libjrrd2.so
 COPY --from=jrrd2-build /usr/src/jrrd2/git.describe /usr/share/java/jrrd2.git.describe
 
-# Install JICMP artifacts 
+# Install JICMP artifacts
 COPY --from=jicmp-build /usr/src/jicmp/jicmp.jar /usr/share/java/jicmp.jar
 COPY --from=jicmp-build /usr/src/jicmp/libjicmp.la /usr/lib64/libjicmp.la
 COPY --from=jicmp-build /usr/src/jicmp/.libs/libjicmp.so /usr/lib64/libjicmp.so
 COPY --from=jicmp-build /usr/src/jicmp/git.describe /usr/share/java/jicmp.git.describe
 
-# Install JICMP6 artifacts 
+# Install JICMP6 artifacts
 COPY --from=jicmp6-build /usr/src/jicmp6/jicmp6.jar /usr/share/java/jicmp6.jar
 COPY --from=jicmp6-build /usr/src/jicmp6/.libs/libjicmp6.la /usr/lib64/libjicmp6.la
 COPY --from=jicmp6-build /usr/src/jicmp6/.libs/libjicmp6.so /usr/lib64/libjicmp6.so
@@ -255,7 +255,7 @@ RUN cd ${OPENNMS_HOME} && \
     rm -f *-source.tar.gz && \
     tar xzf opennms-*.tar.gz && \
     cp -r ${OPENNMS_HOME}/etc ${OPENNMS_HOME}/share/etc-pristine && \
-    echo "version.display=$(cat ${OPENNMS_HOME}/opennms.git.describe)" > ${OPENNMS_HOME}/etc/opennms.properties.d/version.properties && \ 
+    echo "version.display=$(cat ${OPENNMS_HOME}/opennms.git.describe)" > ${OPENNMS_HOME}/etc/opennms.properties.d/version.properties && \
     rm -rf *.tar.gz
 RUN rm -rf /root/.m2 && \
     rm -rf /usr/src/opennms/

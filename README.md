@@ -67,8 +67,8 @@ docker build \
 
 | Argument                 | Default                              | Description                                                     |
 |:-------------------------|:-------------------------------------|:----------------------------------------------------------------|
-| _JAVA_VERSION_           | `1.8.0`                              | Major OpenJDK version                                           | 
-| _JAVA_VERSION_DETAIL_    | `1.8.0.131`                          | Version number used in OpenJDK RPM package                      |
+| _JAVA_VERSION_           | `1.8.0`                              | Major OpenJDK version                                           |
+| _JAVA_VERSION_DETAIL_    | `1.8.0.141`                          | Version number used in OpenJDK RPM package                      |
 | _MAVEN_VERSION_          | `3.5.0`                              | Version number for Apache Maven                                 |
 | _MAVEN_URL_              | `http://ftp.halifax.rwth-aachen.de`  | Server URL for Apache Maven package                             |
 | _MAVEN_PKG_              | `${MAVEN_URL}/apache/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz` | Maven binary package URL |

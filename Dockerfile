@@ -6,7 +6,7 @@ FROM centos:7 as java-dev
 LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG JAVA_VERSION=1.8.0
-ARG JAVA_VERSION_DETAIL=1.8.0.141
+ARG JAVA_VERSION_DETAIL=1.8.0.144
 ENV JAVA_HOME /usr/lib/jvm/java
 
 LABEL vendor="OpenJDK" \

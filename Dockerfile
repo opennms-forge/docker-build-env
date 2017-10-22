@@ -6,7 +6,7 @@ FROM centos:7 as java-dev
 LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG JAVA_VERSION=1.8.0
-ARG JAVA_VERSION_DETAIL=1.8.0.144
+ARG JAVA_VERSION_DETAIL=1.8.0.151
 ENV JAVA_HOME /usr/lib/jvm/java
 
 LABEL vendor="OpenJDK" \
@@ -14,7 +14,8 @@ LABEL vendor="OpenJDK" \
 
 RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y install java-${JAVA_VERSION}-openjdk-devel-${JAVA_VERSION_DETAIL} && \
-    yum -y clean all
+    yum -y clean all && \
+    rm -rf /var/cache/yum
 
 #
 # Stage 2: Build image with Apache Maven
@@ -58,7 +59,8 @@ RUN yum -y --setopt=tsflags=nodocs update && \
     yum install -y ${NSIS_RPM_URL} && \
     yum install -y rpm-build \
                    redhat-rpm-config && \
-    yum clean all
+    yum clean all && \
+    rm -rf /var/cache/yum
 
 # In case there is a MAVEN_PROXY_URL set, the settings.xml will be generated otherwise an empty settings.xml is created.
 RUN mkdir -p ${HOME}/.m2 && \
@@ -223,6 +225,7 @@ RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y install rrdtool \
            gettext && \
     yum clean all && \
+    rm -rf /var/cache/yum && \
     mkdir -p ${OPENNMS_HOME}
 
 WORKDIR /opt/opennms

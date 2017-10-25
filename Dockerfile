@@ -19,3 +19,7 @@ RUN yum -y --setopt=tsflags=nodocs update && \
                    redhat-rpm-config && \
     yum clean all && \
     rm -rf /var/cache/yum
+
+    RUN useradd -m circleci
+
+    USER circleci

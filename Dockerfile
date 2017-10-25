@@ -37,6 +37,6 @@ RUN useradd -m circleci
 
 USER circleci
 
-RUN export PATH=/opt/rh/rh-ruby22/root/usr/local/bin/asciibinder:$PATH && \
+RUN export PATH=/opt/rh/rh-ruby22/root/usr/local/bin:$PATH && \
     export LIBRARY_PATH=/opt/rh/v8314/root/usr/lib64 && \
     export LD_LIBRARY_PATH=/opt/rh/v8314/root/usr/lib64:/opt/rh/nodejs010/root/usr/lib64:/opt/rh/rh-ruby22/root/usr/lib64

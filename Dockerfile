@@ -37,6 +37,7 @@ RUN yum -y --setopt=tsflags=nodocs update && \
 
 RUN scl enable rh-ruby22 -- gem install listen -v 3.0.8 && \
     scl enable rh-ruby22 -- gem install ascii_binder && \
+    scl enable rh-ruby22 -- gem install sass && \
     pip3 install ${ASCIIBINDER_SEARCH_PLUGIN_REPO_URL}
 
 RUN useradd -m circleci

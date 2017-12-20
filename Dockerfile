@@ -1,45 +1,20 @@
-FROM opennms/maven:latest
+FROM opennms/build-env:refactor
 
-LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
+LABEL maintainer "Markus von Rüden <mvr@opennms.com"
 
-ARG NSIS_RPM_URL="http://yum.opennms.org/stable/rhel7/nsis/mingw32-nsis-2.50-1.el7.centos.x86_64.rpm"
-ARG ASCIIBINDER_SEARCH_PLUGIN_REPO_URL="git+https://github.com/opennms-forge/ascii_binder_search_plugin"
+# Override user from build-env
+USER root
 
-ENV PATH /opt/rh/rh-ruby22/root/usr/bin:/opt/rh/rh-ruby22/root/usr/local/bin:${PATH}
-ENV LIBRARY_PATH /opt/rh/v8314/root/usr/lib64
-ENV LD_LIBRARY_PATH /opt/rh/v8314/root/usr/lib64:/opt/rh/nodejs010/root/usr/lib64:/opt/rh/rh-ruby22/root/usr/lib64
-
+# Install required dependencies for test-environment
 RUN yum -y --setopt=tsflags=nodocs update && \
-    yum -y install epel-release \
-                   centos-release-scl && \
-    yum -y install python34 \
-                   python34-pip \
-                   git \
-                   which \
-                   expect \
-                   make \
-                   cmake \
-                   gcc-c++ \
-                   rrdtool-devel \
-                   automake \
-                   libtool \
-                   rh-ruby22 \
-                   rh-ruby22-ruby-devel \
-                   rh-ruby22-rubygem-rake \
-                   v8314 \
-                   rh-ruby22-rubygem-bundler \
-                   scl-utils \
-                   ${NSIS_RPM_URL} \
-                   rpm-build \
-                   redhat-rpm-config && \
+    yum -y install R && \
     yum clean all && \
     rm -rf /var/cache/yum
 
-RUN scl enable rh-ruby22 -- gem install listen -v 3.0.8 && \
-    scl enable rh-ruby22 -- gem install ascii_binder && \
-    scl enable rh-ruby22 -- gem install sass && \
-    pip3 install ${ASCIIBINDER_SEARCH_PLUGIN_REPO_URL}
+# Install JICMP
+RUN rpm -i http://yum.opennms.org/stable/rhel7/jicmp/jicmp-2.0.3-1.el7.centos.x86_64.rpm && \
+    rpm -i http://yum.opennms.org/stable/rhel7/jicmp6/jicmp6-2.0.2-1.el7.centos.x86_64.rpm
 
-RUN useradd -m circleci
-
+# CIRCLECI expects a user named circleci.
+# We may have to run the image as root, but we stay conform anyways
 USER circleci

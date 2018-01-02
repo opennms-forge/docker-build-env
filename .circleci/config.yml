@@ -1,0 +1,124 @@
+version: 2.0
+
+defaults: &defaults
+
+  working_directory: /home/circleci/build-env
+
+  workspace_root: &workspace_root
+    /tmp/workspace
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+references:
+  container_config: &container_config
+    docker:
+      - image: docker:17.11.0-ce-git
+
+  dockerhub_login: &dockerhub_login
+    run:
+      name: DockerHub Login
+      command: |
+        docker login -u ${DOCKERHUB_LOGIN} -p ${DOCKERHUB_PASS}
+
+jobs:
+  build_docker_image:
+    <<: *defaults
+    <<: *container_config
+
+    steps:
+      - setup_remote_docker
+      - *attach_workspace
+      - checkout
+      - run:
+          name: Build OpenNMS Build Environment as Docker Image
+          command: |
+            docker build -t build-env-image .
+      - run:
+          name: Save Docker Container Image as artifact in workspace
+          command: |
+            docker image save build-env-image -o /tmp/workspace/build-env-image
+      - store_artifacts:
+          path: /tmp/workspace/build-env-image
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - build-env-image
+            - dockertag
+
+  publish_dockerhub:
+    <<: *defaults
+    <<: *container_config
+
+    steps:
+      - setup_remote_docker
+      - *attach_workspace
+      - *dockerhub_login
+      - run:
+          name: Load Docker Container Image file
+          command: |
+            docker image load -i /tmp/workspace/build-env-image
+      - run:
+          name: Set DockerHub project user and ensure lower case
+          command: |
+            if [ -z ${DOCKERHUB_PROJECT_USER+x} ]; then
+                DOCKERHUB_PROJECT_USER=$(echo "${CIRCLE_PROJECT_USERNAME}" | tr '[:upper:]' '[:lower:]')
+                echo "export DOCKERHUB_PROJECT_USER=${DOCKERHUB_PROJECT_USER}" >> ${BASH_ENV}
+                echo "Use CIRCLE_PROJECT_USERNAME instead which is set to ${DOCKERHUB_PROJECT_USER}."
+            else
+                DOCKERHUB_PROJECT_USER=$(echo "${DOCKERHUB_PROJECT_USER}" | tr '[:upper:]' '[:lower:]')
+                echo "export DOCKERHUB_PROJECT_USER=${DOCKERHUB_PROJECT_USER}" >> ${BASH_ENV}
+                echo "Overwrite DOCKERHUB_PROJECT_USER with ${DOCKERHUB_PROJECT_USER}."
+            fi
+      - run:
+          name: Set DockerHub project name and ensure lower case
+          command: |
+            if [ -z ${DOCKERHUB_PROJECT_NAME+x} ]; then
+                DOCKERHUB_PROJECT_NAME=$(echo "${CIRCLE_PROJECT_REPONAME}" | tr '[:upper:]' '[:lower:]')
+                echo "export DOCKERHUB_PROJECT_NAME=${DOCKERHUB_PROJECT_NAME}" >> ${BASH_ENV}
+                echo "Use CIRCLE_PROJECT_REPONAME instead which is set to ${DOCKERHUB_PROJECT_NAME}."
+            else
+                DOCKERHUB_PROJECT_NAME=$(echo "${DOCKERHUB_PROJECT_NAME}" | tr '[:upper:]' '[:lower:]')
+                echo "export DOCKERHUB_PROJECT_NAME=${DOCKERHUB_PROJECT_NAME}" >> ${BASH_ENV}
+                echo "Overwrite DOCKERHUB_PROJECT_NAME with ${DOCKERHUB_PROJECT_NAME}."
+            fi
+      - run:
+          name: Generate Docker Tag for releases from branch name
+          command: |
+            DOCKERHUB_TAG=${CIRCLE_BRANCH#release/}
+            DOCKERHUB_TAG=${DOCKERHUB_TAG/\//-}
+            echo "export DOCKERHUB_TAG=${DOCKERHUB_TAG}" >> ${BASH_ENV}
+      - run:
+          name: Tag Docker Container Images
+          command: |
+            source ${BASH_ENV}
+            case "${CIRCLE_BRANCH}" in
+              master)
+                docker tag build-env-image ${DOCKERHUB_PROJECT_USER}/${DOCKERHUB_PROJECT_NAME}:bleeding
+                docker push ${DOCKERHUB_PROJECT_USER}/${DOCKERHUB_PROJECT_NAME}:bleeding
+                ;;
+              release*)
+                docker tag build-env-image ${DOCKERHUB_PROJECT_USER}/${DOCKERHUB_PROJECT_NAME}:latest
+                docker tag build-env-image ${DOCKERHUB_PROJECT_USER}/${DOCKERHUB_PROJECT_NAME}:${DOCKERHUB_TAG}
+                docker push ${DOCKERHUB_PROJECT_USER}/${DOCKERHUB_PROJECT_NAME}:latest
+                docker push ${DOCKERHUB_PROJECT_USER}/${DOCKERHUB_PROJECT_NAME}:${DOCKERHUB_TAG}
+                ;;
+              *)
+                echo "This is not a branch build which needs to be published"
+                ;;
+            esac
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build_docker_image
+      - publish_dockerhub:
+          filters:
+            branches:
+              only:
+                - /release\/.*/
+                - master
+          requires:
+            - build_docker_image

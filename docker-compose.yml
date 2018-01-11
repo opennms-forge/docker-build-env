@@ -53,7 +53,7 @@ services:
       database:
         condition: service_healthy
     volumes:
-      - ../target/opennms-22.0.0-SNAPSHOT:/opt/opennms
+      - ./target/opennms-22.0.0-SNAPSHOT:/opt/opennms
       - ./etc-overlay:/opt/opennms-etc-overlay
     entrypoint: [ "/docker-entrypoint.sh" ]
     command: ["-s"]

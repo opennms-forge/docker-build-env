@@ -14,6 +14,12 @@ services:
   database:
     container_name: opennms.psql
     image: postgres:9.6
+    environment:
+     - TZ=Europe/Berlin
+     - POSTGRES_HOST=database
+     - POSTGRES_PORT=5432
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=postgres
     env_file:
       - .postgres.env
     networks:
@@ -30,11 +36,17 @@ services:
 
   opennms:
     container_name: opennms.build.env
-    image: opennms/build-env:latest
+    image: opennms/build-env:bleeding
     init: true
-    env_file:
-      - .opennms.env
-      - .postgres.env
+    environment:
+      - TZ=Europe/Berlin
+      - POSTGRES_HOST=database
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - OPENNMS_DBNAME=opennms
+      - OPENNMS_DBUSER=opennms
+      - OPENNMS_DBPASS=opennms
     networks:
       - opennms.net
     depends_on:
@@ -55,3 +67,7 @@ services:
       - "8101:8101"
       - "61616:61616"
       - "162:162/udp"
+      - "514:10514/udp"
+      - "50000:50000/udp"
+      - "50001:50001/udp"
+      - "50002:50002/udp"

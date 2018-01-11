@@ -4,6 +4,8 @@ LABEL maintainer "Ronny Trommer <ronny@opennms.org>"
 
 ARG NSIS_RPM_URL="http://yum.opennms.org/stable/rhel7/nsis/mingw32-nsis-2.50-1.el7.centos.x86_64.rpm"
 
+ARG OPENNMS_SRC_ROOT=/usr/src/opennms
+
 ARG JICMP_GIT_REPO_URL="https://github.com/opennms/jicmp"
 ARG JICMP_GIT_BRANCH_REF="jicmp-2.0.4-1"
 ARG JICMP_SRC=/usr/src/jicmp
@@ -93,3 +95,5 @@ COPY ./assets/org.apache.karaf.shell.cfg.tpl /tmp
 COPY ./docker-entrypoint.sh /
 
 RUN useradd -m circleci
+
+WORKDIR ${OPENNMS_SRC_ROOT}

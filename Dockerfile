@@ -33,7 +33,8 @@ RUN yum -y --setopt=tsflags=nodocs update && \
                    redhat-rpm-config \
                    ${NSIS_RPM_URL} && \
     yum clean all && \
-    rm -rf /var/cache/yum
+    rm -rf /var/cache/yum && \
+    mkdir ${OPENNMS_SRC_ROOT}
 
 RUN git clone ${JICMP_GIT_REPO_URL} ${JICMP_SRC} && \
     cd ${JICMP_SRC} && \

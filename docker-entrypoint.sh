@@ -83,6 +83,7 @@ applyOverlayConfig() {
 
 # Start opennms in foreground
 start() {
+  cd ${OPENNMS_HOME}
   local OPENNMS_JAVA_OPTS="-Djava.endorsed.dirs=/opt/opennms/lib/endorsed \
   -Dopennms.home=/opt/opennms \
   -Dcom.sun.management.jmxremote.authenticate=true \

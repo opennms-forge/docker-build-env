@@ -19,7 +19,8 @@ ARG JRRD2_GIT_BRANCH_REF="2.0.4"
 ARG JRRD2_SRC=/usr/src/jrrd2
 
 RUN yum -y --setopt=tsflags=nodocs update && \
-    yum -y install gettext \
+    yum -y install epel-release \
+                   gettext \
                    git \
                    which \
                    expect \
@@ -32,6 +33,7 @@ RUN yum -y --setopt=tsflags=nodocs update && \
                    rpm-build \
                    redhat-rpm-config \
                    ${NSIS_RPM_URL} && \
+    yum -y install R-core && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     mkdir ${OPENNMS_SRC_ROOT}

@@ -20,6 +20,8 @@ services:
      - POSTGRES_PORT=5432
      - POSTGRES_USER=postgres
      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - .postgres.env
     networks:
       - opennms.net
     volumes:

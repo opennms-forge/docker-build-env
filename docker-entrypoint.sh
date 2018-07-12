@@ -7,8 +7,6 @@
 #
 # =====================================================================
 
-OPENNMS_HOME=/opt/opennms
-
 OPENNMS_DATASOURCES_TPL=/tmp/opennms-datasources.xml.tpl
 OPENNMS_DATASOURCES_CFG=${OPENNMS_HOME}/etc/opennms-datasources.xml
 OPENNMS_OVERLAY_CFG=/opt/opennms-etc-overlay

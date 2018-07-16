@@ -3,7 +3,8 @@
 Docker container image with build environment to compile and assemble OpenNMS from source.
 
 * `bleeding`, Build from master branch of the GitHub project
-* `1.2`, `latest`, uses Maven 3.5.4 with OpenJDK Development Kit 8u171
+* `1.3`, `latest`, uses Maven 3.5.4 with OpenJDK Development Kit 8u171
+* `1.2`
 * `1.1`
 * `1.0`
 

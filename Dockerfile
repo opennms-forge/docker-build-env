@@ -22,6 +22,7 @@ ARG JRRD2_SRC=/usr/src/jrrd2
 RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y install epel-release && \
     yum -y install gettext \
+                   wget \
                    git \
                    which \
                    expect \

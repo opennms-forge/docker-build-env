@@ -95,8 +95,8 @@ LABEL org.opennms.jrrd2.git.repo.url="${JRRD2_GIT_REPO_URL}" \
       license="AGPLv3" \
       vendor="OpenNMS Community"
 
-COPY ./assets/opennms-datasources.xml.tpl /tmp
-COPY ./assets/org.apache.karaf.shell.cfg.tpl /tmp
+COPY ./assets/opennms-datasources.xml.tpl /root
+COPY ./assets/org.apache.karaf.shell.cfg.tpl /root
 COPY ./docker-entrypoint.sh /
 
 RUN useradd -m circleci
